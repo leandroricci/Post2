@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Registro</title>
+    <link rel="stylesheet" href="Untitled-1.css">
+
+</head>
+<body>
+    <h1>Formulario de Registro</h1>
+    <form id="registroForm">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required><br>
+
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" name="apellido" required><br>
+
+        <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+        <input type="date" id="fechaNacimiento" name="fechaNacimiento" required><br>
+
+        <button type="submit">Registrar</button>
+    </form>
+
+    <script>
+        document.getElementById("registroForm").addEventListener("submit", function (event) {
+            event.preventDefault(); 
+
+            const formData = {
+                nombre: document.getElementById("nombre").value,
+                apellido: document.getElementById("apellido").value,
+                fechaNacimiento: document.getElementById("fechaNacimiento").value,
+            };
+
+            // Realizar la solicitud HTTP POST
+            fetch("https://jsonplaceholder.typicode.com/users", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log("Respuesta del servidor:", data);
+                })
+                .catch((error) => {
+                    console.error("Error al enviar la solicitud:", error);
+                });
+        });
+    </script>
+</body>
+</html>
